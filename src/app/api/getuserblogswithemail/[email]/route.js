@@ -1,0 +1,13 @@
+import Blog from "@/model/Blog";
+import { NextResponse } from "next/server";
+import mongoose from "mongoose";
+export async function GET (req, { params }) {
+    await mongoose.connect(process.env.MONGODB_URI_BLOG);
+   const { email } =await params;
+   try {
+      const blogs = await Blog.find({ email }).lean().limit(4);
+      return NextResponse.json({ success: true, blogs });
+   } catch (err) {
+      return NextResponse.json({ error: "Failed to fetch blogs", success: false }, { status: 500 });
+   }
+}

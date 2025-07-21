@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/blogconnectdb";
-    await connectDB();
 
 import Blog from "@/model/Blog"; // adjust path based on your setup
 import fs from "fs";

@@ -61,7 +61,11 @@ const BlogCardSkeleton = ({ compact = false }) => {
 const BlogCard = React.forwardRef(({ blog, compact = false, isLoading = false }, ref) => {
   const router = useRouter();
   const [image, setImage] = useState(null);
-
+  useEffect(() => {
+    if (blog?.email) {
+     getimage();
+    }
+  }, [blog?.email]);
   // Show skeleton if loading or no blog data
   if (isLoading || !blog) {
     return <BlogCardSkeleton compact={compact} />;
@@ -85,11 +89,7 @@ const BlogCard = React.forwardRef(({ blog, compact = false, isLoading = false },
       console.error("Error fetching image:", err);
     }
   };
-  useEffect(() => {
-    if (blog?.email) {
-     getimage();
-    }
-  }, [blog?.email]);
+
 
   return (
     <article ref={ref} className="group">

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
 
+import { connectDB } from "@/lib/blogconnectdb";
 export async function GET(req, { params }) {
   console.log(1)
-   await mongoose.connect(process.env.MONGODB_URI_BLOG);
+  await connectDB();
   const { id } =await params;
   try {
     const blog = await Blog.findById(id);
@@ -18,7 +18,8 @@ export async function GET(req, { params }) {
 }
 
 export async function PATCH(req, { params }) {
-  await mongoose.connect(process.env.MONGODB_URI_BLOG);
+  
+  await connectDB();
   const { id } = await params;
 
   try {

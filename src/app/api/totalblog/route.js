@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import Blog from "@/model/Blog";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await mongoose.connect(process.env.MONGODB_URI_BLOG);
+  await connectDB();
 
   const allBlogs = await Blog.find({}).lean(); // lean for performance
   const totalViews = allBlogs.reduce((sum, blog) => sum + (blog.views || 0), 0);

@@ -1,10 +1,9 @@
 import Blog from "@/model/Blog";
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
-
+import { connectDB } from "@/lib/blogconnectdb";
 export async function PATCH(req) {
   try {
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
+    await connectDB();
 
     const { id, user, text } = await req.json();
    console.log(id, user, text);

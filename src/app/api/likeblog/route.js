@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
 
+import { connectDB } from "@/lib/blogconnectdb";
 export async function PATCH(req) {
   try {
-   
+    
     const { id, email } = await req.json();
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
-
+    await connectDB();
     const blog = await Blog.findById(id);
      
 

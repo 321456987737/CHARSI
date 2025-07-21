@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
+import { connectDB } from "@/lib/blogconnectdb";
+    await connectDB();
+
 import Blog from "@/model/Blog"; // adjust path based on your setup
 import fs from "fs";
 import path from "path";
 export async function PATCH(req, { params }) {
   try {
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
+      await connectDB();
     const { id } = await params;
     const { status } = await req.json();
     const updated = await Blog.findByIdAndUpdate(id, { status }, { new: true });
@@ -17,7 +19,7 @@ export async function PATCH(req, { params }) {
 
 export async function DELETE(req, { params }) {
   try {
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
+     await connectDB();
     const {id} = await params;
 
     const blog = await Blog.findById(id);

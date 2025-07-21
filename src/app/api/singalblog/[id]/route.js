@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
 
+import { connectDB } from "@/lib/blogconnectdb";
 export async function GET(request, { params }) {
-  if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
+  await connectDB();
+  
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1");

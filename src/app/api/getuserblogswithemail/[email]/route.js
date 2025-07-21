@@ -1,8 +1,9 @@
 import Blog from "@/model/Blog";
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 export async function GET (req, { params }) {
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
+   await connectDB();
    const { email } =await params;
    try {
       const blogs = await Blog.find({ email }).lean().limit(4);

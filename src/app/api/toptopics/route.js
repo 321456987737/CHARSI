@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
 
 export async function GET() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI_BLOG);
-
+    await connectDB();
     // Aggregate categories and count how many times each has been used
     const topCategories = await Blog.aggregate([
       {

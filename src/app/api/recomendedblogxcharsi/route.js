@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import Blog from "@/model/Blog";
 import { NextResponse } from "next/server";
 export async function GET(){
-try{
-   if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-   }
+   try{
+      await connectDB();
    const blogs = await Blog.find({})
   .sort({ views: -1 }) // Sort by views, highest first
   .limit(6)

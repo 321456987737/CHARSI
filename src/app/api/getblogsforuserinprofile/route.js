@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
 
+import { connectDB } from "@/lib/blogconnectdb";
 export async function GET(req) {
   try {
+    await connectDB();
     // Connect to MongoDB
-    if (mongoose.connection.readyState !== 1) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
 
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");

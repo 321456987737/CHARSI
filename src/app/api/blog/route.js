@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
@@ -8,14 +9,14 @@ import { title } from "process";
 export async function POST(req) {
   try {
     const formData = await req.formData();
-
+    
     const json = JSON.parse(formData.get("data")); // blog data as JSON string
     const { email, username, category } = json;
-
+    
     // handle primary image
     const primaryImage = formData.get("primaryImage");
     let primaryImagePath = null;
-
+    
     if (primaryImage && primaryImage.name) {
       const bytes = await primaryImage.arrayBuffer();
       const buffer = Buffer.from(bytes);
@@ -24,7 +25,7 @@ export async function POST(req) {
       await writeFile(imagePath, buffer);
       primaryImagePath = `/uploads/${imageName}`;
     }
-
+    
     // handle section images
     const sections = await Promise.all(
       json.sections.map(async (section, idx) => {
@@ -48,11 +49,7 @@ export async function POST(req) {
         };
       })
     );
-    // Connect to MongoDB
-    if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
- 
+    await connectDB();
     const newBlog = await Blog.create({
       ...json,
       username: username,
@@ -89,10 +86,7 @@ export async function GET(request) {
     const skip = parseInt(searchParams.get("skip")) || 0;
     const limit = parseInt(searchParams.get("limit")) || 2;
 
-    if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
-    // Get total count of blogs
+  await connectDB();
     const totalBlogs = await Blog.countDocuments();
 
     // Fetch blogs with pagination
@@ -114,38 +108,6 @@ export async function GET(request) {
     return NextResponse.json({ success: false, message: error.message });
   }
 }
-// export async function GET(request) {
-
-//   try {
-//      if (!mongoose.connections[0].readyState) {
-//       await mongoose.connect(process.env.MONGODB_URI_BLOG);
-//     }
-
-//     const { searchParams } = new URL(request.url);
-//     const skip = parseInt(searchParams.get('skip')) || 0;
-//     const limit = 8;
-
-//     const totalBlogs = await Blog.countDocuments({});
-//     const blogs = await Blog.find({})
-//       .sort({ createdAt: -1 })
-//       .skip(skip)
-//       .limit(limit)
-//       .lean();
-//     return Response.json({
-//       success: true,
-//       blogs,
-//       hasMore: skip + limit < totalBlogs
-//     });
-//   } catch (error) {
-//     console.error('Error fetching blogs:', error);
-//     return Response.json(
-//       { error: 'Failed to fetch blogs' },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// POST handler remains unchanged from previous implementation
 export async function PATCH(req) {
   try {
     // Extract ID from search params
@@ -155,9 +117,7 @@ export async function PATCH(req) {
     if (!id)
       return NextResponse.json({ error: "No ID provided" }, { status: 400 });
     // Connect to MongoDB if not already connected
-    if (!mongoose.connections[0].readyState) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
+  await connectDB();
     // Increment the views field by 1
     const updatedBlog = await Blog.findByIdAndUpdate(
       id,

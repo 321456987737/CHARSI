@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import Blog from "@/model/Blog";
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q");
-   await mongoose.connect(process.env.MONGODB_URI_BLOG);
+  await connectDB();
   if (!q) {
     return NextResponse.json({ blogs: [] });
   }

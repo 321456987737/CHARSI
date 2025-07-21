@@ -1,15 +1,14 @@
 // /app/api/blog/analytics/[id]/route.js
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import Blog from "@/model/Blog";
 
 export async function GET(req, { params }) {
   try {
     // connect (use your shared util if you have it)
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(process.env.MONGODB_URI_BLOG);
-    }
-
+    await connectDB();
+ 
     const { id } = await params;
     const blog = await Blog.findById(id).lean();
     if (!blog) {

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"; // ⬅️ use this instead of getServerSession
 import Blog from "@/model/Blog";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -8,9 +9,8 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
-  await mongoose.connect(process.env.MONGODB_URI_BLOG);
-
+  
+  await connectDB();
   try {
     const blogs = await Blog.find({ email: session.user.email }).sort({ createdAt: -1 });
     return NextResponse.json({ blogs });

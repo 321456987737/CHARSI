@@ -2,9 +2,10 @@
 
 import Blog from "@/model/Blog"; // Your Blog model
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
+
+import { connectDB } from "@/lib/blogconnectdb";
 export  async function GET(req) {
-   await mongoose.connect(process.env.MONGODB_URI_BLOG);
+  await connectDB();
     const { searchParams } = new URL(req.url); // ✅ Correct way
   const q = searchParams.get("q"); // ✅ Get 'q' value
 

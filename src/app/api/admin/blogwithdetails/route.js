@@ -1,6 +1,6 @@
 import Blog from "@/model/Blog";
 import { connectDB } from "@/lib/blogconnectdb";
-  await connectDB();
+
 import { NextResponse } from "next/server";
 
 export async function GET(req) {

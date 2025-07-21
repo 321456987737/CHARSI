@@ -2,7 +2,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import SignupForm from '@/components/auth/SignupForm';
+import SignupForm from '@/componenets/auth/signupform';
 
 export default function Page() {
   return (

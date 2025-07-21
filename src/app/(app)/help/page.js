@@ -14,6 +14,7 @@ import {
   Server,
   BookOpenCheck,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 const topics = [
   { name: "Getting started", link: "Gettingstarted", icon: Globe },
@@ -30,6 +31,8 @@ const topics = [
 ];
 
 export default function HelpLandingPage() {
+  const session = useSession();
+  const email = session?.data?.user?.email;
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
       <div className="text-center mb-12">
@@ -59,7 +62,7 @@ export default function HelpLandingPage() {
             if (!message) return;
 
             try {
-              await axios.post("/api/report", { message });
+              await axios.post("/api/report", { message,email });
               alert("Report submitted successfully!");
               input.value = "";
             } catch (err) {

@@ -84,7 +84,6 @@ export async function GET(request) {
     const skip = parseInt(searchParams.get("skip")) || 0;
     const limit = parseInt(searchParams.get("limit")) || 2;
     await connectDB();
-    console.log(1)
     const totalBlogs = await Blog.countDocuments();
 
     // Fetch blogs with pagination
@@ -92,11 +91,8 @@ export async function GET(request) {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
-    console.log(1)
-    console.log(blogs);
     // Calculate if there are more blogs
     const hasMore = skip + blogs.length < totalBlogs;
-    console.log(1)
 
     return NextResponse.json({
       success: true,

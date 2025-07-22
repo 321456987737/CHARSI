@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import User from "@/model/User";
-import { connectDB } from "@/lib/Connectdb";
+import { connectDB } from "@/lib/blogconnectdb";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {

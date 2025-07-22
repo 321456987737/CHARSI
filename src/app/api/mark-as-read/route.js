@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import User from "@/model/User";
 import Blog from "@/model/Blog";
-import { connectDB } from "@/lib/Connectdb";
-
+import { connectDB } from "@/lib/blogconnectdb";
 export async function PATCH(req) {
   try {
     await connectDB();
@@ -32,12 +31,18 @@ export async function PATCH(req) {
 
 export async function GET(req) {
   try {
+    console.log(1)
     await connectDB();
     const email = req.nextUrl.searchParams.get("email");
     if (!email) {
       return NextResponse.json({ success: false, message: "Email is required" }, { status: 400 });
     }
-    const user = await User.findOne({ email });
+    console.log(1)
+    console.log(email);
+
+    const user = await User.findOne({ email: email });
+console.log(1)
+console.log(user)
     if (!user) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }

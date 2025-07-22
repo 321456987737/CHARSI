@@ -3,7 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/option";
 
 import User from "@/model/User";
 import bcrypt from "bcryptjs";
-import {connectDB} from "@/lib/Connectdb";
+import { connectDB } from "@/lib/blogconnectdb";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();

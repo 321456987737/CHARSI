@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/option";
 
 import User from "@/model/User";
-import {connectDB} from "@/lib/Connectdb";
+import { connectDB } from "@/lib/blogconnectdb";
 
 export default async function handler(req, res) {
   if (req.method !== "PATCH") return res.status(405).end();

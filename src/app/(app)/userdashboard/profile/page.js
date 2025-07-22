@@ -17,7 +17,7 @@ export function ProfileLeftSection() {
   const fileInputRef = useRef();
   const [readblogs, setReadblogs] = useState([]);
 
-  const username = session?.user?.name || "Ifti Hazara";
+  const username = session?.user?.name || "Create account";
   const userImage = session?.user?.image;
 
   const handlePhotoInsert = (event) => {

@@ -2,7 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/model/User";
 import bcrypt from "bcryptjs";
-import {connectDB} from "@/lib/Connectdb"
+import { connectDB } from "@/lib/blogconnectdb";
 export const authOptions = {
   providers: [
     // ✅ Google OAuth

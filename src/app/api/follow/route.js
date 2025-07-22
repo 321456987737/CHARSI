@@ -1,5 +1,5 @@
 // /app/api/check-follow-status/route.js
-import { connectDB } from "@/lib/Connectdb";
+import { connectDB } from "@/lib/blogconnectdb";
 import User from "@/model/User";
 import { NextResponse } from "next/server";
 

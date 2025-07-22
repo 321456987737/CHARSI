@@ -4,7 +4,7 @@ import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { NextResponse } from "next/server";
 import User from "@/model/User";
-import { connectDB } from "@/lib/Connectdb";
+import { connectDB } from "@/lib/blogconnectdb";
 export async function POST(req) {
   try {
     await connectDB();

@@ -43,9 +43,11 @@ const userSchema = new mongoose.Schema(
       { type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] },
     ],
     content: {
-      type: String,
-      required: true,
-    },
+  type: String,
+  required: false, // or just remove `required`
+  default: "",     // optional default value
+},
+
     password: {
       type: String,
       required: [true, "Password is required"],

@@ -62,9 +62,11 @@ const PlansPage = () => {
       router.push("/userdashboard");
     }
   };
+
   const handlePro = async () => {
     alert("pro");
   };
+  
   const handlePremium = async () => {
     alert("premium");
   };

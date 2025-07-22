@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 export async function POST(request) {
   try {
     await connectDB();
-
+console.log(1)
     const { username, email, password } = await request.json();
 
     // Basic validation
@@ -16,8 +16,10 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+console.log(2)
 
     const existingUser = await User.findOne({ email });
+console.log(3)
 
     if (existingUser) {
       return NextResponse.json(
@@ -25,14 +27,16 @@ export async function POST(request) {
         { status: 409 } // Conflict
       );
     }
+console.log(4)
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    console.log(username, email, password, hashedPassword);
     const user = await User.create({
       username,
       email,
       password: hashedPassword,
     });
+console.log(5)
 
     // Exclude password from response
     const { password: _, ...userData } = user.toObject();

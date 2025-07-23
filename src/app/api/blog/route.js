@@ -7,14 +7,16 @@ import { v4 as uuidv4 } from "uuid";
 export async function POST(req) {
   try {
     const formData = await req.formData();
-    
+    console.log(1)
     const json = JSON.parse(formData.get("data")); // blog data as JSON string
     const { email, username, category } = json;
+    console.log(11)
     
     // handle primary image
     const primaryImage = formData.get("primaryImage");
     let primaryImagePath = null;
-    
+        console.log(111)
+
     if (primaryImage && primaryImage.name) {
       const bytes = await primaryImage.arrayBuffer();
       const buffer = Buffer.from(bytes);
@@ -23,7 +25,8 @@ export async function POST(req) {
       await writeFile(imagePath, buffer);
       primaryImagePath = `/uploads/${imageName}`;
     }
-    
+        console.log(1111)
+
     // handle section images
     const sections = await Promise.all(
       json.sections.map(async (section, idx) => {
@@ -56,6 +59,8 @@ export async function POST(req) {
       primaryImage: primaryImagePath,
       sections: sections,
     });
+        console.log(11111)
+
     console.log(newBlog);
     console.log(1);
     const notification = {
@@ -66,6 +71,8 @@ export async function POST(req) {
         title: newBlog.title,
         read: false
      }
+         console.log(111111)
+
     return NextResponse.json({ success: true, blog: newBlog,notification:notification }, { status: 201 });
   } catch (err) {
     console.error("Error saving blog:", err);

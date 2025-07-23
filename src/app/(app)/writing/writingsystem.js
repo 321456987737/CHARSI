@@ -231,182 +231,185 @@ const BlogEditor = () => {
   ];
 
   return (
-    <div className="mx-auto mt-8 md:w-[60%] w-[95%] pb-20">
-      {/* Primary Image */}
-      <div className="mb-6 flex flex-col items-center">
-        <div className="relative w-full flex justify-center">
-          {primaryImage ? (
-            <div className="relative w-full">
-              <img
-                src={primaryImage}
-                alt="Primary"
-                className="w-full max-h-72 object-cover rounded-xl border"
-              />
-              <button
-                onClick={() => {
-                  setPrimaryImage(null);
-                  setPrimaryImageFile(null);
-                }}
-                className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded text-sm"
-              >
-                Remove
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => fileInputs.current.primary.click()}
-              className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-200"
-            >
-              + Add Primary Image
-            </button>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            ref={(el) => (fileInputs.current.primary = el)}
-            onChange={handlePrimaryImageChange}
-            style={{ display: "none" }}
+    <div className="mx-auto mt-8 w-[95%] md:w-[80%] lg:w-[60%] pb-20">
+  {/* Primary Image */}
+  <div className="mb-6 flex flex-col items-center">
+    <div className="relative w-full flex justify-center">
+      {primaryImage ? (
+        <div className="relative w-full">
+          <img
+            src={primaryImage}
+            alt="Primary"
+            className="w-full max-h-72 object-cover rounded-xl border"
           />
-        </div>
-      </div>
-
-      {/* Title */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Blog Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="text-3xl font-semibold placeholder-gray-500 outline-none px-4 py-3 rounded-xl bg-gray-100 w-full shadow-sm focus:ring-2 focus:ring-gray-300"
-        />
-      </div>
-
-      {/* Blog Description */}
-      <div className="mb-8">
-        <textarea
-          placeholder="Blog Description"
-          value={blogDesc}
-          onChange={(e) => setBlogDesc(e.target.value)}
-          className="w-full p-4 rounded-lg bg-gray-50 outline-none resize-none text-base leading-relaxed placeholder-gray-500 shadow-sm border border-gray-200 focus:ring-2 focus:ring-gray-300"
-          rows={2}
-        />
-      </div>
-      <div className="w-full flex items-center justify-center mb-6">
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border border-gray-300 rounded-md px-2 outline-none py-2 w-full max-w-md"
-        >
-          <option value="" disabled>
-            Select a category
-          </option>
-          {categories.map((category, index) => (
-            <option value={category} key={index}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Blog Sections */}
-      <h2 className="text-xl font-bold mb-4">Blog Sections</h2>
-      {sections.map((section) => (
-        <div
-          key={section.id}
-          className="relative mb-8 p-4 bg-white rounded-xl shadow border border-gray-200"
-        >
           <button
-            onClick={() => handleRemoveSection(section.id)}
-            title="Delete section"
-            className="absolute top-2 right-2 text-red-600 hover:bg-red-100 border border-red-200 rounded-full h-[28px] w-[28px] flex items-center justify-center"
+            onClick={() => {
+              setPrimaryImage(null);
+              setPrimaryImageFile(null);
+            }}
+            className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded text-sm"
           >
-            ×
+            Remove
           </button>
-
-          {/* Toolbar */}
-          <div className="flex gap-2 mb-3 flex-wrap">
-            {TOOLBAR_OPTIONS.map((tool) => (
-              <button
-                key={tool.label}
-                onClick={() =>
-                  tool.type === "custom"
-                    ? insertHeading(tool.level, section.id)
-                    : applyCommand(tool.command, tool.value || null, section.id)
-                }
-                title={tool.title}
-                className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100"
-              >
-                {tool.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Section Image */}
-          <div className="mb-3">
-            {section.image ? (
-              <div className="relative">
-                <img
-                  src={section.image}
-                  alt="Section"
-                  className="w-full max-h-56 object-cover rounded-lg border"
-                />
-                <button
-                  onClick={() => handleRemoveSectionImage(section.id)}
-                  className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded text-sm"
-                  title="Remove image"
-                >
-                  Remove
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => sectionImageInputs.current[section.id]?.click()}
-                className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-200"
-              >
-                + Add Section Image
-              </button>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              ref={(el) => (sectionImageInputs.current[section.id] = el)}
-              onChange={(e) => handleSectionImageChange(e, section.id)}
-              style={{ display: "none" }}
-            />
-          </div>
-
-          {/* Editable Section */}
-          <div
-            ref={(el) => (sectionRefs.current[section.id] = el)}
-            contentEditable
-            suppressContentEditableWarning
-            onInput={(e) => handleSectionInput(e, section.id)}
-            className="w-full p-4 rounded-lg bg-gray-50 outline-none min-h-[100px] text-base leading-relaxed shadow-sm border border-gray-200 focus:ring-2 focus:ring-gray-300 whitespace-pre-wrap break-words"
-          ></div>
         </div>
-      ))}
-
-      {/* Add Section */}
-      <div className="flex justify-center mt-4">
+      ) : (
         <button
-          onClick={handleAddSection}
-          className="h-[36px] w-[36px] text-xl rounded-full bg-green-100 border border-green-300 hover:bg-green-200 transition flex items-center justify-center"
-          title="Add section"
+          onClick={() => fileInputs.current.primary.click()}
+          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-200 text-center w-full sm:w-auto"
         >
-          +
+          + Add Primary Image
         </button>
-      </div>
-
-      {/* Save Button */}
-      <div className="flex justify-end mt-6">
-        <button
-          onClick={handleSaveBlog}
-          className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
-        >
-          Publish Blog
-        </button>
-      </div>
+      )}
+      <input
+        type="file"
+        accept="image/*"
+        ref={(el) => (fileInputs.current.primary = el)}
+        onChange={handlePrimaryImageChange}
+        style={{ display: "none" }}
+      />
     </div>
+  </div>
+
+  {/* Title */}
+  <div className="mb-4">
+    <input
+      type="text"
+      placeholder="Blog Title"
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+      className="text-2xl md:text-3xl font-semibold placeholder-gray-500 outline-none px-4 py-3 rounded-xl bg-gray-100 w-full shadow-sm focus:ring-2 focus:ring-gray-300"
+    />
+  </div>
+
+  {/* Blog Description */}
+  <div className="mb-8">
+    <textarea
+      placeholder="Blog Description"
+      value={blogDesc}
+      onChange={(e) => setBlogDesc(e.target.value)}
+      className="w-full p-4 rounded-lg bg-gray-50 outline-none resize-none text-base leading-relaxed placeholder-gray-500 shadow-sm border border-gray-200 focus:ring-2 focus:ring-gray-300"
+      rows={2}
+    />
+  </div>
+
+  {/* Category Selector */}
+  <div className="w-full flex items-center justify-center mb-6">
+    <select
+      value={selectedCategory}
+      onChange={(e) => setSelectedCategory(e.target.value)}
+      className="border border-gray-300 rounded-md px-3 py-2 w-full max-w-md text-sm sm:text-base"
+    >
+      <option value="" disabled>
+        Select a category
+      </option>
+      {categories.map((category, index) => (
+        <option value={category} key={index}>
+          {category}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Blog Sections */}
+  <h2 className="text-lg sm:text-xl font-bold mb-4">Blog Sections</h2>
+  {sections.map((section) => (
+    <div
+      key={section.id}
+      className="relative mb-8 p-4 bg-white rounded-xl shadow border border-gray-200"
+    >
+      {/* Delete Button */}
+      <button
+        onClick={() => handleRemoveSection(section.id)}
+        title="Delete section"
+        className="absolute top-2 right-2 text-red-600 hover:bg-red-100 border border-red-200 rounded-full h-[28px] w-[28px] flex items-center justify-center"
+      >
+        ×
+      </button>
+
+      {/* Toolbar */}
+      <div className="flex gap-2 mb-3 flex-wrap">
+        {TOOLBAR_OPTIONS.map((tool) => (
+          <button
+            key={tool.label}
+            onClick={() =>
+              tool.type === "custom"
+                ? insertHeading(tool.level, section.id)
+                : applyCommand(tool.command, tool.value || null, section.id)
+            }
+            title={tool.title}
+            className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100"
+          >
+            {tool.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Section Image */}
+      <div className="mb-3">
+        {section.image ? (
+          <div className="relative">
+            <img
+              src={section.image}
+              alt="Section"
+              className="w-full max-h-56 object-cover rounded-lg border"
+            />
+            <button
+              onClick={() => handleRemoveSectionImage(section.id)}
+              className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded text-sm"
+              title="Remove image"
+            >
+              Remove
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => sectionImageInputs.current[section.id]?.click()}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-200 w-full sm:w-auto"
+          >
+            + Add Section Image
+          </button>
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          ref={(el) => (sectionImageInputs.current[section.id] = el)}
+          onChange={(e) => handleSectionImageChange(e, section.id)}
+          style={{ display: "none" }}
+        />
+      </div>
+
+      {/* Editable Section */}
+      <div
+        ref={(el) => (sectionRefs.current[section.id] = el)}
+        contentEditable
+        suppressContentEditableWarning
+        onInput={(e) => handleSectionInput(e, section.id)}
+        className="w-full p-4 rounded-lg bg-gray-50 outline-none min-h-[100px] text-base leading-relaxed shadow-sm border border-gray-200 focus:ring-2 focus:ring-gray-300 whitespace-pre-wrap break-words"
+      ></div>
+    </div>
+  ))}
+
+  {/* Add Section */}
+  <div className="flex justify-center mt-4">
+    <button
+      onClick={handleAddSection}
+      className="h-[36px] w-[36px] text-xl rounded-full bg-green-100 border border-green-300 hover:bg-green-200 transition flex items-center justify-center"
+      title="Add section"
+    >
+      +
+    </button>
+  </div>
+
+  {/* Save Button */}
+  <div className="flex justify-end mt-6">
+    <button
+      onClick={handleSaveBlog}
+      className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+    >
+      Publish Blog
+    </button>
+  </div>
+</div>
   );
 };
 

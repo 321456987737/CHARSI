@@ -29,50 +29,101 @@ const Page = () => {
   const [aboutUser, setAboutUser] = useState(false);
 
   const menuSection1 = [
-    { name: "Profile", icon: <User className="w-4 h-4" />, href: "/userdashboard/profile" },
-    { name: "Library", icon: <BookOpen className="w-4 h-4" />, href: "/userdashboard/library" },
-    { name: "Stories", icon: <FileText className="w-4 h-4" />, href: "/userdashboard/story" },
-    { name: "Stats", icon: <BarChart2 className="w-4 h-4" />, href: "/userdashboard/stats" },
+    {
+      name: "Profile",
+      icon: <User className="w-4 h-4" />,
+      href: "/userdashboard/profile",
+    },
+    {
+      name: "Library",
+      icon: <BookOpen className="w-4 h-4" />,
+      href: "/userdashboard/library",
+    },
+    {
+      name: "Stories",
+      icon: <FileText className="w-4 h-4" />,
+      href: "/userdashboard/story",
+    },
+    {
+      name: "Stats",
+      icon: <BarChart2 className="w-4 h-4" />,
+      href: "/userdashboard/stats",
+    },
   ];
 
   const menuSection2 = [
-    { name: "Settings", icon: <Settings className="w-4 h-4" />, href: "/userdashboard/settings" },
-    { name: "Refine recommendations", icon: <Sparkles className="w-4 h-4" />, href: "/userdashboard/Refinerecommendations" },
-    { name: "Manage publications", icon: <Landmark className="w-4 h-4" />, href: "#" },
+    {
+      name: "Settings",
+      icon: <Settings className="w-4 h-4" />,
+      href: "/userdashboard/settings",
+    },
+    {
+      name: "Refine recommendations",
+      icon: <Sparkles className="w-4 h-4" />,
+      href: "/userdashboard/Refinerecommendations",
+    },
+    {
+      name: "Manage publications",
+      icon: <Landmark className="w-4 h-4" />,
+      href: "#",
+    },
     { name: "Help", icon: <HelpCircle className="w-4 h-4" />, href: "/help" },
   ];
 
   const menuSection3 = [
-    { name: "Become a Medium member", icon: <Star className="w-4 h-4" />, href: "/plans" },
-    { name: "Create a Mastodon account", icon: <Globe className="w-4 h-4" />, href: "#" },
-    { name: "Apply for author verification", icon: <ShieldCheck className="w-4 h-4" />, href: "/verified-authors" },
-    { name: "Apply to the Partner Program", icon: <BadgeCheck className="w-4 h-4" />, href: "/partner-program" },
-    { name: "Gift a membership", icon: <Gift className="w-4 h-4" />, href: "/gift-plans" },
+    {
+      name: "Become a Medium member",
+      icon: <Star className="w-4 h-4" />,
+      href: "/plans",
+    },
+    {
+      name: "Create a Mastodon account",
+      icon: <Globe className="w-4 h-4" />,
+      href: "#",
+    },
+    {
+      name: "Apply for author verification",
+      icon: <ShieldCheck className="w-4 h-4" />,
+      href: "/verified-authors",
+    },
+    {
+      name: "Apply to the Partner Program",
+      icon: <BadgeCheck className="w-4 h-4" />,
+      href: "/partner-program",
+    },
+    {
+      name: "Gift a membership",
+      icon: <Gift className="w-4 h-4" />,
+      href: "/gift-plans",
+    },
   ];
 
   return (
     <div>
       {/* Navbar */}
-      <div className="fixed top-0 z-50 w-full bg-white/60 border-b border-gray-200 px-4 py-2 ">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Left Section */}
-          <div className="flex items-center gap-6">
-            <Logo />
-            <div className="text-sm text-gray-600 font-medium ml-[-80px]">{session?.user?.username}</div>
+      <div className="fixed top-0 z-50 w-full bg-white/60 border-b border-gray-200 px-4 py-2">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 sm:gap-0">
+          {/* Left Section */} 
+          <div className="flex ml-[-85px] items-center gap-3 sm:gap-6 flex-shrink-0">
+            <Logo  />
+            {session?.user?.username && (
+              <div className="text-sm text-gray-600 font-medium hidden sm:block truncate max-w-[100px]">
+                {session.user.username}
+              </div>
+            )}
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-4">
-
+          <div className="flex items-center gap-2 sm:gap-4 ml-auto">
             <button className="hover:bg-gray-100 p-2 rounded-full transition">
               <MoreHorizontal className="w-5 h-5 text-gray-600" />
             </button>
 
-            <button className="hover:bg-gray-100 p-2 rounded-full transition">
-              <Link href={"/userdashboard/notification"}>
-              <Bell className="w-5 h-5 text-gray-600" />
-              </Link>
-            </button>
+            <Link href="/userdashboard/notification">
+              <button className="hover:bg-gray-100 p-2 rounded-full transition">
+                <Bell className="w-5 h-5 text-gray-600" />
+              </button>
+            </Link>
 
             <div className="relative">
               <div
@@ -92,7 +143,7 @@ const Page = () => {
 
               {/* Dropdown */}
               {aboutUser && (
-                <div className="absolute right-0 mt-3 w-72 bg-white border border-gray-200 shadow-lg rounded-lg z-50 p-4 space-y-4">
+                <div className="absolute right-0 mt-3 w-64 sm:w-72 bg-white border border-gray-200 shadow-lg rounded-lg z-50 p-4 space-y-4">
                   {/* Section 1 */}
                   <div className="space-y-1">
                     {menuSection1.map((item, i) => (
@@ -145,7 +196,10 @@ const Page = () => {
                       Sign out
                     </button>
                     <div className="text-xs text-gray-500 px-3 truncate">
-                      {session?.user?.email?.replace(/(?<=.).(?=[^@]*?@)/g, "•")}
+                      {session?.user?.email?.replace(
+                        /(?<=.).(?=[^@]*?@)/g,
+                        "•"
+                      )}
                     </div>
                   </div>
                 </div>
@@ -157,7 +211,10 @@ const Page = () => {
 
       {/* Spacer to avoid overlap with fixed navbar */}
       <div className="pt-[75px]" />
-      <div>  <Writingsystem />    </div>
+      <div>
+        {" "}
+        <Writingsystem />{" "}
+      </div>
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 const page = () => {
-  const width = 300;
-  const height = 60;
+  const width = 200;
+  const height = 45;
    return (
     <div>
        <svg
             width={width}
-            height={height}
+         height={height}
             viewBox="0 0 300 80"
             xmlns="http://www.w3.org/2000/svg"
           >

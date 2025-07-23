@@ -24,10 +24,14 @@ const Page = () => {
     };
 
     getBlogs();
-  }, []);
+  }, [id]);
 
-  const addViews = async () => {
-    await axios.patch(`/api/blog?id=${id}`);
+  const addViews = async (blogId) => {
+    try {
+      await axios.patch(`/api/blog?id=${blogId}`);
+    } catch (err) {
+      console.error("Error adding view:", err);
+    }
   };
 
   if (loading) {
@@ -47,44 +51,43 @@ const Page = () => {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="mb-6 text-2xl font-bold">Recommended Blogs</h1>
+    <section className="max-w-7xl mx-auto px-4 py-10">
+      <h1 className="mb-8 text-3xl font-bold text-gray-800">Recommended Blogs</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {blogs.map((blog) => (
-          <div
+          <Link
+            href={`/userdashboard/readblog/${blog._id}`}
             key={blog._id}
-            onClick={addViews}
-            className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow duration-300"
+            onClick={() => addViews(blog._id)}
+            className="group"
           >
-            <Link href={`/userdashboard/readblog/${blog._id}`}>
+            <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition-all duration-300 border border-gray-200">
               <div className="relative w-full h-48">
                 <Image
                   src={blog.primaryImage || "/placeholder.jpg"}
                   alt={blog.title}
                   fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                   priority
                 />
               </div>
-            </Link>
 
-            <div className="p-4 space-y-2">
-              <Link href={`/blog/${blog._id}`}>
-                <h2 className="text-lg font-semibold text-gray-800 hover:underline line-clamp-2">
+              <div className="p-4 space-y-2">
+                <h2 className="text-lg font-semibold text-gray-900 group-hover:underline line-clamp-2">
                   {blog.title}
                 </h2>
-              </Link>
 
-              <p className="text-gray-600 text-sm line-clamp-3">
-                {blog.description}
-              </p>
+                <p className="text-gray-600 text-sm line-clamp-3">
+                  {blog.description}
+                </p>
 
-              <p className="text-sm text-gray-500 mt-2">
-                Posted on {new Date(blog.createdAt).toLocaleDateString()}
-              </p>
+                <p className="text-xs text-gray-400 pt-1">
+                  Posted on {new Date(blog.createdAt).toLocaleDateString()}
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

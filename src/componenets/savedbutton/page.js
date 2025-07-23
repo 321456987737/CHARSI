@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Save, CheckCircle2 } from "lucide-react";
+import { Save, CheckCircle2, Loader2 } from "lucide-react";
 import axios from "axios";
 
 export default function MarkAsSaved({ blogId, initialSaved, userEmail }) {
-  const [saved, setSaved] = useState(initialSaved);
+  const [saved, setSaved] = useState(initialSaved || false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleSave = async () => {
-    if (!userEmail || !blogId) return;
+    if (!userEmail || !blogId || loading) return;
 
     setLoading(true);
     setError("");
@@ -35,18 +35,45 @@ export default function MarkAsSaved({ blogId, initialSaved, userEmail }) {
   };
 
   return (
-    <button
-      onClick={handleSave}
-      disabled={loading}
-      title={saved ? "Saved" : "Save this blog"}
-      className="flex items-center gap-1 px-3 py-1 rounded-lg border hover:bg-gray-100 text-sm transition duration-200 disabled:opacity-50"
-    >
-      {saved ? (
-        <CheckCircle2 className="w-4 h-4 text-green-600" />
-      ) : (
-        <Save className="w-4 h-4 text-gray-600" />
+    <div className="relative flex flex-col items-center w-fit group">
+      <button
+        onClick={handleSave}
+        disabled={loading || !userEmail}
+        className={`
+          p-2 rounded-full transition-all duration-200
+          ${saved ? "text-green-600" : "text-gray-500 hover:text-blue-600"}
+          ${loading || !userEmail ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
+        `}
+      >
+        {loading ? (
+          <Loader2 size={22} className="animate-spin" />
+        ) : saved ? (
+          <CheckCircle2
+            size={22}
+            className="fill-green-600 text-green-600 transition-all"
+          />
+        ) : (
+          <Save
+            size={22}
+            className="fill-transparent transition-all"
+          />
+        )}
+      </button>
+
+      {/* Tooltip */}
+      <span
+        className={`
+          absolute -top-8 px-2 py-1 rounded-md text-xs text-white bg-gray-800 shadow-sm
+          opacity-0 group-hover:opacity-100 transition-opacity duration-200
+          pointer-events-none
+        `}
+      >
+        {loading ? "Saving..." : saved ? "Saved" : "Save"}
+      </span>
+
+      {error && (
+        <p className="text-red-500 text-xs mt-1 animate-pulse">{error}</p>
       )}
-      {saved ? "Saved" : "Save"}
-    </button>
+    </div>
   );
 }

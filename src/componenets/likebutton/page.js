@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { Heart } from "lucide-react";
 
 function LikeButton({ blogId, initialLikes, initialLiked, userEmail }) {
   const [likes, setLikes] = useState(initialLikes || 0);
@@ -7,7 +8,7 @@ function LikeButton({ blogId, initialLikes, initialLiked, userEmail }) {
   const [loading, setLoading] = useState(false);
 
   const handleLike = async () => {
-    if (!userEmail) return; // Optionally show login prompt
+    if (!userEmail || loading) return;
     setLoading(true);
     try {
       const res = await axios.patch("/api/likeblog", {
@@ -18,40 +19,42 @@ function LikeButton({ blogId, initialLikes, initialLiked, userEmail }) {
         setLikes(res.data.likes);
         setLiked(res.data.liked);
       }
-      handlelikeofuser();
+      await axios.patch("/api/likeblogofuser", {
+        id: blogId,
+        email: userEmail,
+      });
     } catch (err) {
-      // Optionally show error
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
-    const handlelikeofuser = async () =>{
-       try{
-        await axios.patch("/api/likeblogofuser", {
-          id: blogId,
-          email: userEmail,
-        });
-       }catch (err){
-        return console.error(err);
-       } 
- }
-  return (
-    <button
-  onClick={handleLike}
-  disabled={loading || !userEmail}
-  className={`
-    px-6 py-2 rounded-full text-sm font-medium transition-all duration-200
-    flex items-center gap-2 shadow-md
-    ${liked
-      ? "bg-red-600 text-white hover:bg-red-700"
-      : "bg-gray-200 text-gray-800 hover:bg-gray-300"}
-    ${loading || !userEmail ? "opacity-50 cursor-not-allowed" : ""}
-  `}
-  title={userEmail ? "" : "Sign in to like"}
->
-  {liked ? "❤️ Liked" : "🤍 Like"} <span>{likes}</span>
-</button>
 
+  return (
+    <div className="flex  items-center justify-center gap-1 w-fit">
+      <span className="text-sm text-gray-700 font-medium">
+        {likes} {likes === 1 ? "like" : "likes"}
+      </span>
+      <button
+        onClick={handleLike}
+        disabled={!userEmail || loading}
+        title={userEmail ? (liked ? "Unlike" : "Like") : "Sign in to like"}
+        className={`
+          p-3 rounded-full transition-all duration-200 ease-in-out
+          ${liked ? "text-red-500" : "text-gray-400 hover:text-red-500"}
+          ${loading || !userEmail ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
+        `}
+      >
+        <Heart
+          size={28}
+          className={`transition-all duration-300 ease-in-out
+            ${liked ? "fill-red-500" : "fill-transparent"}
+          `}
+          strokeWidth={2}
+        />
+      </button>
+
+    </div>
   );
 }
 

@@ -1,74 +1,78 @@
 "use client";
-import React, { useState } from 'react';
-import { useSession } from "next-auth/react";
-import axios from 'axios';
 
-const Page = ({ blogId }) => {
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { BookOpenCheck, Loader2 } from "lucide-react";
+
+const MarkAsReadButton = ({ blogId }) => {
   const { data: session } = useSession();
   const email = session?.user?.email;
+
   const [loading, setLoading] = useState(false);
   const [marked, setMarked] = useState(false);
   const [error, setError] = useState("");
 
   const handleMarkAsRead = async () => {
-   console.log(11)
     setError("");
-    if (!email) {
-      setError("User not authenticated");
-      return;
-    }
-    if (!blogId) {
-      setError("No blog ID provided");
-      return;
-    }
+    if (!email || !blogId || loading) return;
 
     setLoading(true);
-
     try {
       const res = await axios.patch("/api/mark-as-read", {
         id: blogId,
         email,
       });
-      const result = res.data;
-      if (result.success) {
+
+      if (res.data.success) {
         setMarked(true);
       } else {
-        setError(result.message || "Failed to mark as read.");
+        setError("Failed to mark as read.");
       }
     } catch (err) {
-      setError("Error while marking as read.");
+      setError("Something went wrong.");
     }
     setLoading(false);
   };
 
   return (
-    <div>
- <button
-  onClick={handleMarkAsRead}
-  disabled={loading || marked}
-  className={`
-    px-6 py-2 rounded-full text-sm font-medium transition-all duration-200
-    flex items-center gap-2 shadow-md
-    ${marked || loading
-      ? "bg-gray-400 text-white cursor-not-allowed"
-      : "bg-green-600 text-white hover:bg-green-700 focus:ring-2 focus:ring-green-400"}
-  `}
->
-  {marked ? "✅ Marked as Read" : loading ? "⏳ Marking..." : "📖 Mark as Read"}
-</button>
+    <div className="relative flex flex-col items-center w-fit group">
+      <button
+        onClick={handleMarkAsRead}
+        disabled={loading || marked || !email}
+        className={`
+          p-2 rounded-full transition-all duration-200
+          ${marked ? "text-green-600" : "text-gray-500 hover:text-green-500"}
+          ${loading || !email ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
+        `}
+      >
+        {loading ? (
+          <Loader2 size={22} className="animate-spin" />
+        ) : (
+          <BookOpenCheck
+            size={22}
+            className={`transition-all ${marked ? "fill-green-600" : "fill-transparent"}`}
+            strokeWidth={2}
+          />
+        )}
+      </button>
 
+      {/* Tooltip */}
+      <span
+        className={`
+          absolute -top-8 px-2 py-1 rounded-md text-xs text-white bg-gray-800 shadow-sm
+          opacity-0 group-hover:opacity-100 transition-opacity duration-200
+          pointer-events-none
+        `}
+      >
+        {loading ? "Marking..." : marked ? "Marked as Read" : "Mark as Read"}
+      </span>
 
-  {error && (
-    <p className="text-red-500 text-sm mt-2 animate-pulse">{error}</p>
-  )}
-</div>
-
+      {error && (
+        <p className="text-red-500 text-xs mt-1 animate-pulse">{error}</p>
+      )}
+    </div>
   );
 };
 
-export default Page;
-
-
-
-
-
+export default MarkAsReadButton;

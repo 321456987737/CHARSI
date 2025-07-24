@@ -164,7 +164,7 @@ const Page = () => {
           )}
 
           {/* Logo */}
-          <div className={`flex  items-center md:ml-[-80px] ${isMobile ? "flex-1  justify-center" : ""}`}>
+          <div className={`flex  items-center md:ml-[-60px] ${isMobile ? "flex-1  justify-center" : ""}`}>
             <Logo className="h-8 w-8" />
           </div>
 

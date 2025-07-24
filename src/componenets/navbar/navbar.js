@@ -7,7 +7,7 @@ const Navbar = () => {
     <div className="h-[75px] border-b-[1px] fixed border-solid w-full z-50 bg-amber-50   flex items-center justify-center ">
       <div className="w-[80%] flex items-center justify-between">
         <div className="flex items-center justify-center">
-          <div className="ml-[-110px]">
+          <div className="ml-[-75px]">
             <Logo />
           </div>
         </div>

@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    plan: { type: String, default: "free" },
     aboutText: { type: String, default: "" },
     profileImage: { type: String, default: "" },
     readblogs: { type: [String], default: [] }, // Array of blog IDs

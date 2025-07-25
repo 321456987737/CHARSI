@@ -5,7 +5,7 @@ import { payfastConfig } from "@/lib/payfast/payfastConfig";
 export async function POST(req) {
   const body = await req.json();
   const { plan, amount } = body;
-
+console.log(payfastConfig.merchant_id,"this is the merchant id ",payfastConfig.merchant_key,payfastConfig.return_url,payfastConfig.cancel_url,payfastConfig.notify_url)
   const paymentData = {
     merchant_id: payfastConfig.merchant_id,
     merchant_key: payfastConfig.merchant_key,
@@ -46,7 +46,7 @@ export async function POST(req) {
       </body>
     </html>
   `;
-
+  console.log(formHtml,"this is the form html ")
   return new NextResponse(formHtml, {
     headers: { "Content-Type": "text/html" },
   });

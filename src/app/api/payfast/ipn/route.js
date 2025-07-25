@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { generateSignature } from "@/lib/payfast/signature";
 
 export async function POST(req) {
+  console.log("POST request received");
   const bodyText = await req.text(); // PayFast sends x-www-form-urlencoded
   const params = new URLSearchParams(bodyText);
   const data = Object.fromEntries(params.entries());

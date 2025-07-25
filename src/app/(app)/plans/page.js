@@ -28,7 +28,7 @@ const plans = [
 export default function CheckoutPage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loadingPlan, setLoadingPlan] = useState(null);
 
   const handlePlanClick = async (planName, price) => {
     if (!session) {
@@ -41,7 +41,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    setLoading(true);
+    setLoadingPlan(planName);
     const res = await fetch('/api/payfast', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,31 +49,36 @@ export default function CheckoutPage() {
     });
 
     const html = await res.text();
-    setLoading(false);
+    console.log(html,"this is the html");
+    setLoadingPlan(null);
     const newWindow = window.open();
     newWindow.document.write(html);
     newWindow.document.close();
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Choose a Plan</h1>
+    <div className="max-w-4xl mx-auto py-10 px-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">Choose a Plan</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {plans.map((plan) => (
-          <div key={plan.name} className="border p-6 rounded-xl shadow">
+          <div key={plan.name} className="border p-6 rounded-xl shadow hover:shadow-lg transition">
             <h2 className="text-xl font-semibold">{plan.name}</h2>
-            <p className="text-gray-600">{plan.description}</p>
-            <ul className="mt-4 text-sm">
+            <p className="text-gray-600 mt-1">{plan.description}</p>
+            <ul className="mt-4 text-sm text-gray-700">
               {plan.features.map((f) => (
                 <li key={f}>✔ {f}</li>
               ))}
             </ul>
             <button
-              className="mt-6 bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+              className="mt-6 w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800 disabled:opacity-50"
               onClick={() => handlePlanClick(plan.name, plan.price)}
-              disabled={loading}
+              disabled={loadingPlan === plan.name}
             >
-              {loading ? 'Loading...' : plan.price === 0 ? 'Start Free' : `Subscribe $${plan.price}/mo`}
+              {loadingPlan === plan.name
+                ? 'Loading...'
+                : plan.price === 0
+                ? 'Start Free'
+                : `Subscribe $${plan.price}/mo`}
             </button>
           </div>
         ))}

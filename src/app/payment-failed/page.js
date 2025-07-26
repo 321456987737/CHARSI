@@ -1,12 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function PaymentFailed() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const error = searchParams.get('error');
 
   useEffect(() => {
     const timer = setTimeout(() => {

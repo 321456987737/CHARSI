@@ -14,13 +14,18 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-      subscription: {
-    plan: String,
-    status: String,
-    amount: Number,
-    m_payment_id: String,
-    next_billing: Date,
+      subscriptionStatus: {
+    type: String,
+    enum: ['FREE', 'PRO', 'PREMIUM'],
+    default: 'FREE'
   },
+  subscriptionEndDate: Date,
+  subscriptionHistory: [{
+    plan: String,
+    startDate: Date,
+    endDate: Date,
+    transactionId: String
+  }],
     aboutText: { type: String, default: "" },
     profileImage: { type: String, default: "" },
     readblogs: { type: [String], default: [] }, // Array of blog IDs

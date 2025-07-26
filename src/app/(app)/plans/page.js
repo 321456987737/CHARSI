@@ -64,7 +64,11 @@ export default function CheckoutPage() {
       const res = await fetch('/api/payfast', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planName, amount: price }),
+        body: JSON.stringify({ 
+          plan: planName, 
+          amount: price,
+          userEmail: session?.user?.email // Add user's email from session
+        }),
       });
 
       const html = await res.text();

@@ -337,7 +337,7 @@ const Page = () => {
 
         {/* Suggestion Bar */}
         <div className="border-t border-gray-200 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
+          <div className="max-w-6xl hidden md:block mx-auto px-4">
             <Suggestion />
           </div>
         </div>

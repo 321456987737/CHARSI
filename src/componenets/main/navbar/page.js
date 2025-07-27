@@ -330,7 +330,7 @@ const Page = () => {
 
         {/* Mobile Search Bar */}
         {isMobile && (
-          <div className="px-4 pb-3">
+          <div className="px-4 pt-2.5 pb-2">
             <Searchbar />
           </div>
         )}

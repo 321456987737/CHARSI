@@ -106,7 +106,7 @@ export default function LoadBlogs() {
             onClick={() => addViews(blog._id)}
             key={blog._id}
             ref={index === blogs.length - 1 ? lastBlogRef : null}
-            className="blog-card cursor-pointer p-4 hover:shadow-md rounded-2xl transition-shadow bg-white flex flex-col justify-between"
+            className="blog-card border border-gray-300 cursor-pointer p-4 hover:shadow-md rounded-2xl transition-shadow bg-white flex flex-col justify-between"
             style={{ 
               animationDelay: `${(index % 6) * 100}ms`
             }}

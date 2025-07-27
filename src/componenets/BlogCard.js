@@ -98,11 +98,11 @@ const BlogCard = React.forwardRef(({ blog, compact = false, isLoading = false },
           onClick={addViews}
           className={`${
             compact
-              ? " border-b border-gray-100 last:border-b-0"
-              : "p-6 mb-6"
-          } transition-all duration-200 `}
+              ? " border-b border-gray-300 last:border-b-0"
+              : " mb-6 border-b border-gray-300 "
+          } transition-all duration-200  `}
         >
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-6">
             {/* Small icon */}
             <div className="w-8 h-8 rounded-sm bg-gray-200 flex-shrink-0 flex items-center justify-center mt-1">
               {image ? (

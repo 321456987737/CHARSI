@@ -31,10 +31,10 @@ function LikeButton({ blogId, initialLikes, initialLiked, userEmail }) {
   };
 
   return (
-    <div className="flex  items-center justify-center gap-1 w-fit">
-      <span className="text-sm text-gray-700 font-medium">
+    <div className="flex  items-center justify-center  ">
+      {/* <span className="text-sm text-gray-700 font-medium">
         {likes} {likes === 1 ? "like" : "likes"}
-      </span>
+      </span> */}
       <button
         onClick={handleLike}
         disabled={!userEmail || loading}
@@ -46,7 +46,7 @@ function LikeButton({ blogId, initialLikes, initialLiked, userEmail }) {
         `}
       >
         <Heart
-          size={28}
+          size={22}
           className={`transition-all duration-300 ease-in-out
             ${liked ? "fill-red-500" : "fill-transparent"}
           `}

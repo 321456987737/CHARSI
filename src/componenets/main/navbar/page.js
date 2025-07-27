@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useCallback } from "react";
 import Logo from "@/componenets/logo/page";
 import Suggestion from "@/componenets/suggesttopics/page";

@@ -35,7 +35,7 @@ export default function MarkAsSaved({ blogId, initialSaved, userEmail }) {
   };
 
   return (
-    <div className="relative flex flex-col items-center w-fit group">
+    <div className="relative flex flex-col items-center justify-center w-[46px] h-[46px] group">
       <button
         onClick={handleSave}
         disabled={loading || !userEmail}

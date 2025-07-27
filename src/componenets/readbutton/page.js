@@ -36,12 +36,12 @@ const MarkAsReadButton = ({ blogId }) => {
   };
 
   return (
-    <div className="relative flex flex-col items-center w-fit group">
+    <div className="relative w-[46px] h-[46px] flex flex-col items-center justify-center  group">
       <button
         onClick={handleMarkAsRead}
         disabled={loading || marked || !email}
         className={`
-          p-2 rounded-full transition-all duration-200
+           rounded-full transition-all duration-200
           ${marked ? "text-green-600" : "text-gray-500 hover:text-green-500"}
           ${loading || !email ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
         `}

@@ -98,7 +98,7 @@ const ReadBlogPage = () => {
       </div>
 
       {/* Buttons Row */}
-      <div className="flex justify-center gap-6 mb-12">
+      <div className="flex justify-center gap-6 mb-12 ">
         <LikeButton
           blogId={blog._id}
           initialLikes={blog.likes}

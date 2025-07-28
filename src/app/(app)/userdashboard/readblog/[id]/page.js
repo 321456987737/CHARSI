@@ -9,7 +9,7 @@ import { UserRound } from "lucide-react";
 import LikeButton from "@/componenets/likebutton/page";
 import MarkasRead from "@/componenets/readbutton/page";
 import MarkasSaved from "@/componenets/savedbutton/page";
-
+import Inpagefooter from "@/componenets/footer/inpagefooter"
 const COMMENTS_LIMIT = 10;
 
 const ReadBlogPage = () => {
@@ -202,6 +202,7 @@ const ReadBlogPage = () => {
       <div className="border-t border-gray-200 mt-12 pt-6">
         <Extrablogs />
       </div>
+      
     </div>
   );
 };

@@ -1,11 +1,25 @@
-import Navbar from "@/componenets/main/navbar/page"
-import Suggestion from "@/componenets/suggesttopics/page";
+"use client";
+
+import { usePathname } from "next/navigation";
+import Navbar from "@/componenets/main/navbar/page";
+import BlogFooter from "@/componenets/footer/inpagefooter";
+
 export default function MainLayout({ children }) {
+  const pathname = usePathname();
+
+  // Show footer only on these specific pages
+  const showFooter = [
+    "/userdashboard",
+    "/userdashboard/categoryblog",
+    "/userdashboard/loadblogs",
+    "/userdashboard/readblog",
+  ].some((path) => pathname?.startsWith(path));
+
   return (
-   <>
-        <Navbar />
-        {children}
-      
-   </>
+    <>
+      <Navbar />
+      {children}
+      {showFooter && <BlogFooter />}
+    </>
   );
 }

@@ -2,7 +2,11 @@
 import Link from "next/link";
 import React from "react";
 import Logo from "@/componenets/logo/page";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   return (
     <div className="h-[75px] border-b-[1px] fixed border-solid w-full z-50 bg-amber-50   flex items-center justify-center ">
       <div className="w-[80%] flex items-center justify-between">
@@ -27,11 +31,9 @@ const Navbar = () => {
             </button>
           </div>
           <div className="mr-[-15px]">
-            <Link href="/signup">
-              <button className="bg-black text-white px-4 py-2 text-md rounded-full cursor-pointer inline-block">
+              <button onClick={()=>{session?router.push("/userdashboard"):router.push("/signin")}} className="bg-black text-white px-4 py-2 text-md rounded-full cursor-pointer inline-block">
                 Get Started
               </button>
-            </Link>
           </div>
         </div>
       </div>

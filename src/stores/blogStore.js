@@ -14,7 +14,7 @@ const useBlogStore = create((set, get) => ({
   loadingMore: false,
   hasMore: true,
   skip: 0,
-  limit: 6,
+  limit: 12,
   activeCategory: "for-you",
   error: null,
   initialized: false,

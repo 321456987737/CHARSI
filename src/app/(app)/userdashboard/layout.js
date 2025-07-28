@@ -11,7 +11,6 @@ export default function MainLayout({ children }) {
   const showFooter = [
     "/userdashboard",
     "/userdashboard/categoryblog",
-    "/userdashboard/loadblogs",
     "/userdashboard/readblog",
   ].some((path) => pathname?.startsWith(path));
 

@@ -3,7 +3,7 @@ import { create } from "zustand";
 import axios from "axios";
 
 // ✅ Max blog limit for frontend state
-const BLOG_FETCH_LIMIT = 32;
+const BLOG_FETCH_LIMIT = 64;
 
 const useBlogStore = create((set, get) => ({
   // State

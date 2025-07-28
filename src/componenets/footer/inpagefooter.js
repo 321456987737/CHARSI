@@ -14,14 +14,14 @@ const BlogFooter = () => {
       transition={{ duration: 0.5 }}
       className="bg-gray-50 border-t mt-12 border-gray-200 py-12 px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
         {/* Brand Column */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-900">MindfulBytes</h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 leading-relaxed">
             Curated thoughts on technology, design, and the creative process.
           </p>
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-4">
             <SocialIcon 
               href="https://twitter.com" 
               icon={<Twitter className="w-5 h-5" />}
@@ -77,18 +77,18 @@ const BlogFooter = () => {
             Stay Updated
           </h4>
           <p className="text-sm text-gray-600 mb-3">
-            Subscribe to receive the latest posts and updates
+            Subscribe to receive the latest posts and updates.
           </p>
-          <form className="flex">
+          <form className="flex flex-col sm:flex-row gap-2">
             <input
               type="email"
               placeholder="Your email"
-              className="px-3 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:ring-1 focus:ring-gray-400 w-full"
+              className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md sm:rounded-l-md sm:rounded-r-none w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
               required
             />
             <button
               type="submit"
-              className="bg-gray-800 text-white px-4 py-2 rounded-r-md text-sm hover:bg-gray-700 transition"
+              className="bg-gray-800 text-white px-4 py-2 text-sm rounded-md sm:rounded-l-none sm:rounded-r-md hover:bg-gray-700 transition w-full sm:w-auto flex items-center justify-center"
             >
               <Mail className="w-4 h-4" />
             </button>
@@ -97,11 +97,11 @@ const BlogFooter = () => {
       </div>
 
       {/* Copyright */}
-      <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
-        <p className="text-xs text-gray-500">
+      <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-xs text-gray-500 text-center md:text-left">
           © {new Date().getFullYear()} MindfulBytes. All rights reserved.
         </p>
-        <div className="flex space-x-6 mt-4 md:mt-0">
+        <div className="flex flex-wrap justify-center md:justify-end gap-6">
           <FooterLink href="/privacy" text="Privacy Policy" small />
           <FooterLink href="/terms" text="Terms of Service" small />
           <FooterLink href="/cookies" text="Cookies" small />

@@ -34,11 +34,10 @@ const SignupForm = () => {
         email: form.email,
         password: form.password,
       });
-
-      router.push("/userdashboard");
+      res.data.success && router.push("/userdashboard");
     } catch (error) {
       console.error(error);
-      setError(error.response?.data?.message || "Something went wrong");
+      setError(error.res?.data?.message || "Something went wrong");
     }
   };
 

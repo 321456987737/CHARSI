@@ -6,8 +6,9 @@ import bcrypt from "bcryptjs";
 export async function POST(request) {
   try {
     await connectDB();
-
+    console.log("Connected to database 1");
     const { username, email, password } = await request.json();
+    console.log("Connected to database 2 ");
 
     // Basic validation
     if (!username || !email || !password) {
@@ -16,10 +17,11 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    console.log("Connected to database 3");
 
 
     const existingUser = await User.findOne({ email });
-
+    console.log(existingUser);
 
     if (existingUser) {
       return NextResponse.json(
@@ -27,6 +29,7 @@ export async function POST(request) {
         { status: 409 } // Conflict
       );
     }
+    console.log("Connected to database 4");
 
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(username, email, password, hashedPassword);
@@ -35,9 +38,11 @@ export async function POST(request) {
       email,
       password: hashedPassword,
     });
+    console.log("Connected to database 55");
 
     // Exclude password from response
     const { password: _, ...userData } = user.toObject();
+    console.log("Connected to database 6" );
 
     return NextResponse.json(
       {

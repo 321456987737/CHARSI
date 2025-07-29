@@ -22,24 +22,25 @@ const SignupForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+  e.preventDefault();
+  setError(null);
 
-    try {
-      const res = await axios.post("/api/auth/signup", form);
-
+  try {
+    const res = await axios.post("/api/auth/signup", form);
+    if (res.data.success) {
       await signIn("credentials", {
-        redirect: false,
+        redirect: true,
+        callbackUrl: "/userdashboard",  // Specify where to redirect after success
         username: form.username,
         email: form.email,
         password: form.password,
       });
-      res.data.success && router.push("/userdashboard");
-    } catch (error) {
-      console.error(error);
-      setError(error.res?.data?.message || "Something went wrong");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setError(error.response?.data?.message || "Something went wrong");
+  }
+};
 
   const handleGoogleSignUp = () => {
     signIn("google", { callbackUrl: "/userdashboard" });

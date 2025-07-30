@@ -34,6 +34,7 @@ export const authOptions = {
           id: user._id,
           username: user.username,
           email: user.email,
+          role: user.role // Add role here
         };
       },
     }),
@@ -50,8 +51,8 @@ export const authOptions = {
         await User.create({
           email: user.email,
           username: user.name || profile.name,
-          password:"google-oauth",
-          // No password for Google users
+          password: "google-oauth",
+          role: "user" // Set default role for Google users
         });
       }
 

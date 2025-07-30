@@ -13,13 +13,13 @@ export async function middleware(req) {
       url.pathname = "/signup";
       return NextResponse.redirect(url);
     }
-  }
 
-  // If user is logged in and trying to access admin panel, validate admin
-  if (url.pathname === "/admin") {
-    if (token.role !== 'admin') {
-      url.pathname = "/userdashboard"; 
-      return NextResponse.redirect(url);
+    // Check for admin routes
+    if (url.pathname.startsWith('/admin')) {
+      if (token.role !== 'admin') {
+        url.pathname = "/userdashboard";
+        return NextResponse.redirect(url);
+      }
     }
   }
 
@@ -27,7 +27,7 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/userdashboard", "/writing", "/admin"],
+  matcher: ["/userdashboard", "/writing", "/admin"]
 };
 
 // import { NextResponse } from "next/server";

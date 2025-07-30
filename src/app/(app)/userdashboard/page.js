@@ -5,7 +5,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import Loadblog from "./loadblogs/page"
 const Page = () => {
    const { data: session } = useSession();
-   console.log(session);
+   console.log(session,"session in userdashboard page");
   return (
     <>
     <Loadblog />

@@ -32,7 +32,7 @@ const SigninForm = () => {
         password: form.password,
       });
 
-      if (result?.ok) {
+      if (result.success) {
         router.push("/userdashboard");
       } else {
         setError(result?.error || "Invalid credentials");

@@ -2,7 +2,9 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedPaths = ["/userdashboard", "/writing", "/admin"];
+const protectedPaths = ["/userdashboard", "/writing", 
+  // "/admin"
+];
 
 export async function middleware(req) {
   const url = req.nextUrl.clone();
@@ -17,27 +19,29 @@ export async function middleware(req) {
   }
 
   // 2️⃣ If user is logged in and trying to access adminpanel, validate admin
-  if (url.pathname === "/admin") {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/getadminusers`);
-      const adminUsers = await res.json();
+  // if (url.pathname === "/admin") {
+  //   try {
+  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/getadminusers`);
+  //     const adminUsers = await res.json();
 
-      const isAdmin = adminUsers?.some((admin) => admin.email === token.email);
+  //     const isAdmin = adminUsers?.some((admin) => admin.email === token.email);
 
-      if (!isAdmin) {
-        url.pathname = "/userdashboard"; // redirect unauthorized users
-        return NextResponse.redirect(url);
-      }
-    } catch (error) {
-      console.error("Admin check failed:", error);
-      url.pathname = "/userdashboard";
-      return NextResponse.redirect(url);
-    }
-  }
+  //     if (!isAdmin) {
+  //       url.pathname = "/userdashboard"; // redirect unauthorized users
+  //       return NextResponse.redirect(url);
+  //     }
+  //   } catch (error) {
+  //     console.error("Admin check failed:", error);
+  //     url.pathname = "/userdashboard";
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/userdashboard", "/writing", "/admin"],
+  matcher: ["/userdashboard", "/writing", 
+    // "/admin"
+  ],
 };

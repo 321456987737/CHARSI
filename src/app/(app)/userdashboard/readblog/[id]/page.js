@@ -90,8 +90,8 @@ const ReadBlogPage = () => {
               <img
                 src={section.image}
                 alt={`Section ${i + 1}`}
-                className="rounded-lg mt-4 w-full shadow max-h-[400px] object-cover" 
-              />
+                className="rounded-lg mt-4 w-full shadow md:max-h-[400px] max-h-[300px]  object-cover" 
+              /> 
             )}
           </div>
         ))}

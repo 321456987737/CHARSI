@@ -14,7 +14,7 @@ export async function middleware(req) {
       return NextResponse.redirect(url);
     }
 
-    // Check for admin routes
+    // Check for admin routesnpm run dev
     if (url.pathname.startsWith('/admin')) {
       if (token.role !== 'admin') {
         url.pathname = "/userdashboard";

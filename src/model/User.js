@@ -14,18 +14,20 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-      subscriptionStatus: {
-    type: String,
-    enum: ['FREE', 'PRO', 'PREMIUM'],
-    default: 'FREE'
-  },
-  subscriptionEndDate: Date,
-  subscriptionHistory: [{
-    plan: String,
-    startDate: Date,
-    endDate: Date,
-    transactionId: String
-  }],
+    subscriptionStatus: {
+      type: String,
+      enum: ["FREE", "PRO", "PREMIUM"],
+      default: "FREE",
+    },
+    subscriptionEndDate: Date,
+    subscriptionHistory: [
+      {
+        plan: String,
+        startDate: Date,
+        endDate: Date,
+        transactionId: String,
+      },
+    ],
     aboutText: { type: String, default: "" },
     profileImage: { type: String, default: "" },
     readblogs: { type: [String], default: [] }, // Array of blog IDs
@@ -34,10 +36,10 @@ const userSchema = new mongoose.Schema(
     blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Blog" }],
     status: { type: String, default: "active" },
     role: {
-  type: String,
-  enum: ["user", "admin", "writer"],
-  default: "user"
-},
+      type: String,
+      enum: ["user", "admin", "writer"],
+      default: "user",
+    },
     bio: {
       type: String,
       default: "a",
@@ -55,10 +57,10 @@ const userSchema = new mongoose.Schema(
       { type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] },
     ],
     content: {
-  type: String,
-  required: false, // or just remove `required`
-  default: "",     // optional default value
-},
+      type: String,
+      required: false, // or just remove `required`
+      default: "", // optional default value
+    },
 
     password: {
       type: String,

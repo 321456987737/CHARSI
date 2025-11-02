@@ -259,7 +259,14 @@ export function ProfileLeftSection() {
 // Right Section Component
 export function ProfileRightSection() {
   const { data: session } = useSession();
-  const username = session?.user?.name || "Ifti Hazara";
+  useEffect(() => {
+    
+  
+    console.log(session,"this is the session")
+    
+  }, [session])
+  
+  const username = session?.user?.username || "-- -- ";
   const userImage = session?.user?.image;
 
   return (

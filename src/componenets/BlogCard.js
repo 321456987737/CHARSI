@@ -59,6 +59,7 @@ const BlogCardSkeleton = ({ compact = false }) => {
 };
 
 const BlogCard = React.forwardRef(({ blog, compact = false, isLoading = false }, ref) => {
+  console.log(blog, "blog in blogcard component");
   const router = useRouter();
   const [image, setImage] = useState(null);
   useEffect(() => {

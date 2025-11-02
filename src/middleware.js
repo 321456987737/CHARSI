@@ -15,19 +15,19 @@ export async function middleware(req) {
     }
 
     // Check for admin routesnpm run dev
-    if (url.pathname.startsWith('/admin')) {
-      if (token.role !== 'admin') {
-        url.pathname = "/userdashboard";
-        return NextResponse.redirect(url);
-      }
-    }
+    // if (url.pathname.startsWith('/admin')) {
+    //   if (token.role !== 'admin') {
+    //     url.pathname = "/userdashboard";
+    //     return NextResponse.redirect(url);
+    //   }
+    // }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/userdashboard", "/writing", "/admin"]
+  matcher: [ "/writing", "/admin"]
 };
 
 // import { NextResponse } from "next/server";

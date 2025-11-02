@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Landingpagefooter from "@/componenets/footer/landingpagefooter";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 // Animation variants
 const fadeUp = {
@@ -22,7 +22,7 @@ const fadeUp = {
 };
 
 const Page = () => {
-  const {data: session} = useSession();
+  // const {data: session} = useSession();
   const router = useRouter();
   return (
     <div className="w-full min-h-screen pt-[60px] bg-[#FFFBF0] flex flex-col">
@@ -85,13 +85,13 @@ const Page = () => {
                 custom={4}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <motion.button 
-                 onClick={()=>{session?router.push("/userdashboard"):router.push("/signin")}}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="group relative px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
-                  >
-                    <span className="relative z-10">Start exploring</span>
+                <motion.button
+                  onClick={() => { router.push("/userdashboard") }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group relative px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                >
+                  <span className="relative z-10">Start exploring</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-amber-700 to-orange-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </motion.button>
 

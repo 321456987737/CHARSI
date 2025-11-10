@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/blogconnectdb";
+import { connectDB } from "@/lib/Connectdb";
 import User from "@/model/User";
 import bcrypt from "bcryptjs";
 
 export async function POST(request) {
+  console.log(1)
   try {
+  console.log(2)
+
     await connectDB();
+      console.log(3)
+
     console.log("Connected to database 1");
     const { username, email, password } = await request.json();
     console.log("Connected to database 2 ");

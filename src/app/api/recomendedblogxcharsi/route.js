@@ -6,6 +6,7 @@ export async function GET(){
    try{
       console.log(1)
       await connectDB();
+      console.log("2")
    const blogs = await Blog.find({})
   .sort({ views: -1 }) // Sort by views, highest first
   .limit(6)

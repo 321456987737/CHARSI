@@ -12,20 +12,51 @@ if (!cached) {
 }
 
 export async function connectDB() {
-  if (cached.conn) {
-    // If already connected, return the connection
+  // if (cached.conn) {
+  //   // If already connected, return the connection
+  //   return cached.conn;
+  // }
+  // if (mongoose.connection.readyState === 1) {
+  //   // If mongoose is already connected, use that
+  //   cached.conn = mongoose.connection;
+  //   return cached.conn;
+  // }
+  // if (!cached.promise) {
+  //   cached.promise = mongoose.connect(MONGODB_URI, {
+  //     bufferCommands: false,
+  //   }).then((mongoose) => mongoose.connection);
+  // }
+  // cached.conn = await cached.promise;
+  // return cached.conn;
+  try {
+    if (cached.conn) {
+      console.log("🟢 Using cached connection");
+      return cached.conn;
+    }
+
+    if (mongoose.connection.readyState === 1) {
+      console.log("🟢 Already connected");
+      cached.conn = mongoose.connection;
+      return cached.conn;
+    }
+
+    if (!cached.promise) {
+      console.log("🟡 Connecting to MongoDB...");
+
+      cached.promise = mongoose.connect(MONGODB_URI, {
+        bufferCommands: false,
+      }).then((mongoose) => {
+        console.log("✅ MongoDB Connected Successfully");
+        return mongoose.connection;
+      });
+    }
+
+    cached.conn = await cached.promise;
+
     return cached.conn;
+
+  } catch (error) {
+    console.error("❌ MongoDB Connection Error:", error);
+    throw error;
   }
-  if (mongoose.connection.readyState === 1) {
-    // If mongoose is already connected, use that
-    cached.conn = mongoose.connection;
-    return cached.conn;
-  }
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    }).then((mongoose) => mongoose.connection);
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
 }

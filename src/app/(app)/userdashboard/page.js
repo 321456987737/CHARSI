@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
-// import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react"
 import Loadblog from "./loadblogs/page"
 const Page = () => {
-  //  const { data: session } = useSession();
-  //  console.log(session,"session in userdashboard page");
+   const { data: session } = useSession();
+   console.log(session,"session in userdashboard page");
   return (
     <>
     <Loadblog />

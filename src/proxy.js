@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 const protectedPaths = ["/userdashboard", "/writing", "/admin"];
 
-export async function middleware(req) {
+export async function proxy(req) {
   const url = req.nextUrl.clone();
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 

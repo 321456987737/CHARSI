@@ -19,7 +19,6 @@ export const authOptions = {
         email: { label: "Email", type: "email", placeholder: "example@example.com" },
         password: { label: "Password", type: "password" },
       },
-      
       async authorize(credentials) {
         await connectDB();
 
